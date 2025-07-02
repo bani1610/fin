@@ -25,12 +25,20 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
-    }
+        $user = $request->user();
 
+        // Cek peran (role) secara langsung, JANGAN gunakan isAdmin()
+        if ($user->role === 'admin') {
+            // Arahkan admin ke panel Filament
+            return redirect()->intended(config('filament.path', '/admin'));
+        }
+        
+        // Arahkan user biasa ke dashboard mereka
+        // Pastikan nama route Anda adalah 'dashboard'
+        return redirect()->intended(route('dashboard'));
+    }
     /**
      * Destroy an authenticated session.
      */

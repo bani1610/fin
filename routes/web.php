@@ -20,12 +20,18 @@ use App\Http\Controllers\NotificationController;
 
 // Rute publik akan langsung diarahkan ke dashboard jika sudah login
 Route::get('/', function () {
-    return redirect()->route('dashboard');
+    // Cek role user saat mengakses root
+    if (auth()->check()) {
+        if (auth()->user()->isAdmin()) {
+            return redirect('/admin');
+        }
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 
-// Grup rute yang memerlukan login dan verifikasi email
+// Grup rute untuk USER saja
 Route::middleware(['auth', 'verified'])->group(function () {
-    
     // Dashboard utama
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -58,8 +64,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Notifikasi
     Route::post('/notifications/mark-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAsRead');
+});
 
-}); // Akhir dari grup middleware 'auth', 'verified'
-
-// Memuat rute autentikasi dari file terpisah (bawaan Breeze)
 require __DIR__.'/auth.php';

@@ -49,7 +49,7 @@
     @endauth
 
     {{-- Tampilkan jumlah total like --}}
-    <span class="text-sm text-gray-600">{{ $post->likes->count() }} Likes</span>
+    <span class="text-sm text-gray-600 ml-2">{{ $post->likes->count() }} Likes</span>
 
     {{-- Tombol Komentar (dibuat agak ke kanan) --}}
     <a href="{{ route('forum.posts.show', $post) }}#comments" class="action-button ml-auto">

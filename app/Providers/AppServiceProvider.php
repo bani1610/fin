@@ -7,6 +7,8 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as Authenticatab
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
+use App\Http\Responses\FilamentLogoutResponse;
+use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+       $this->app->singleton(LogoutResponseContract::class, FilamentLogoutResponse::class);
     }
 
     /**

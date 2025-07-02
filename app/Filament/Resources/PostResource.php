@@ -14,6 +14,8 @@ class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
 
+    protected static ?string $navigationGroup = 'Blog';
+
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
     public static function form(Form $form): Form
@@ -35,20 +37,36 @@ class PostResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+        
             ->columns([
                 Tables\Columns\TextColumn::make('judul')->searchable(),
+                Tables\Columns\TextColumn::make('isi_post')
+                ->label('Isi Post') // Mengubah label kolom
+                ->limit(50) // Batasi teks yang tampil jadi 50 karakter
+                ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')->searchable(),
                 Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(), // <-- TAMBAHKAN BARIS INI
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
     
+    public static function shouldRegisterNavigation(): bool
+    {
+        return true; // Pastikan ini true
+    }
     public static function getRelations(): array
     {
         return [];
     }
+    
     
     public static function getPages(): array
     {

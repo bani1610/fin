@@ -19,7 +19,9 @@
             {{-- Feed Postingan (tidak berubah) --}}
             <div class="space-y-8">
                 @forelse ($posts as $post)
-                    <x-forum.post-card :post="$post" />
+                    <div class="mb-6 py-4">
+                        <x-forum.post-card :post="$post" />
+                    </div>
                 @empty
                     <div class="feed-card">
                         <div class="p-8 text-center text-gray-500">

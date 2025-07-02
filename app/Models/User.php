@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,6 +38,11 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->role === 'admin';
+    }
     public function getProfilePhotoUrlAttribute()
     {
         // Cek apakah ada path foto yang tersimpan di database
@@ -61,6 +67,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
     }
 
     public function moodLogs() 
