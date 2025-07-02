@@ -19,20 +19,20 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        // 1. Ambil data mood yang diinput hari ini
         $moodToday = MoodLog::where('user_id', $user->id)
                             ->whereDate('created_at', today())
                             ->first();
 
-        // 2. Ambil semua tugas yang belum selesai
-        // Kode ini sekarang akan berjalan karena 'Task' sudah dikenali
+        // Ambil semua tugas yang statusnya BUKAN 'done'
         $tasks = Tasks::where('user_id', $user->id)
-                     ->where('status', '!=', 'done')
-                     ->orderBy('deadline', 'asc')
-                     ->get();
+                    ->where('status', '!=', 'done')
+                    ->orderBy('deadline', 'asc')
+                    ->get();
 
-        // 3. Implementasi "Smart Study Recommender"
-        $recommendedTasks = [];
+        // Inisialisasi $recommendedTasks sebagai collection kosong
+        $recommendedTasks = collect();
+
+        // Hanya jalankan logika jika mood hari ini sudah diisi
         if ($moodToday) {
             $mood = $moodToday->mood;
 
@@ -40,28 +40,24 @@ class DashboardController extends Controller
                 // Mood positif -> sarankan tugas berat atau sedang
                 $recommendedTasks = $tasks->filter(function ($task) {
                     return in_array($task->beban_kognitif, ['berat', 'sedang']);
-                });
+                })->take(3); // Ambil maksimal 3
+
             } elseif (in_array($mood, ['biasa', 'ragu'])) {
                 // Mood biasa -> sarankan tugas sedang atau ringan
                 $recommendedTasks = $tasks->filter(function ($task) {
                     return in_array($task->beban_kognitif, ['sedang', 'ringan']);
-                });
-            } else { // lelah, stres, sedih
-                // Mood buruk -> sarankan tugas paling ringan
+                })->take(3); // Ambil maksimal 3
+
+            } else { // Untuk mood lelah, stres, sedih
+                // Mood buruk -> sarankan HANYA tugas ringan
                 $recommendedTasks = $tasks->filter(function ($task) {
                     return $task->beban_kognitif == 'ringan';
-                });
+                })->take(3); // Ambil maksimal 3
             }
-        }
-
-        // Jika tidak ada rekomendasi spesifik, tampilkan 3 tugas terdekat
-        if (empty($recommendedTasks) || collect($recommendedTasks)->isEmpty()) {
-            $recommendedTasks = $tasks->take(3);
         }
 
         return view('dashboard', [
             'moodToday' => $moodToday,
-            'tasks' => $tasks,
             'recommendedTasks' => $recommendedTasks,
         ]);
     }

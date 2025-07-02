@@ -67,14 +67,22 @@
                                             <p class="font-bold text-gray-800">{{ $task->judul_tugas }}</p>
                                             <p class="text-sm text-gray-600">Deadline: {{ \Carbon\Carbon::parse($task->deadline)->format('d M Y') }}</p>
                                         </div>
-                                        <span class="mt-2 sm:mt-0 text-xs font-semibold uppercase px-2 py-1 rounded-full {{ $task->beban_kognitif_badge['class'] }}">
+                                        @php
+                                            $bebanClass = [
+                                                'berat'  => 'bg-red-100 text-red-800',
+                                                'sedang' => 'bg-orange-100 text-orange-800',
+                                                'ringan' => 'bg-green-100 text-green-800',
+                                            ][$task->beban_kognitif] ?? 'bg-gray-100 text-gray-800';
+                                        @endphp
+                                        <span class="mt-2 sm:mt-0 text-xs font-semibold uppercase px-2 py-1 rounded-full {{ $bebanClass }}">
                                             {{ $task->beban_kognitif }}
                                         </span>
                                     </div>
                                 </a>
                             @empty
-                                <div class="bg-gray-50 text-center p-6 rounded-lg">
-                                    <p class="text-gray-500">Tidak ada tugas yang direkomendasikan. Waktunya santai! 🧘‍♂️</p>
+                                <div class="bg-sky-50 text-sky-800 text-center p-6 rounded-lg border border-sky-200">
+                                    <p class="font-semibold">Tidak ada tugas yang cocok dengan mood-mu saat ini.</p>
+                                    <p class="mt-1 text-sm">Ini kesempatan bagus untuk melakukan sesuatu yang menyenangkan untuk menaikkan semangatmu! ✨</p>
                                 </div>
                             @endforelse
                         </div>

@@ -25,6 +25,7 @@ class User extends Authenticatable
         'university', // <-- Tambahkan ini
         'bio',        // <-- Tambahkan ini
         'profile_photo_path', // <-- Tambahkan ini
+        'role'
     ];
 
     /**
@@ -62,22 +63,26 @@ class User extends Authenticatable
         ];
     }
 
-    public function moodLogs() {
+    public function moodLogs() 
+    {
         return $this->hasMany(MoodLog::class);
     }
 
-    public function tasks() {
+    public function tasks() 
+    {
         return $this->hasMany(Tasks::class);
     }
 
-    public function posts() {
-        return $this->hasMany(Post::class);
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'user_id');
     }
     public function likes()
     {
         return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
     }
-    public function comments() {
+    public function comments() 
+    {
         return $this->hasMany(Comment::class);
     }
 }

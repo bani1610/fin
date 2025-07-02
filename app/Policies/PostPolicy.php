@@ -43,13 +43,10 @@ class PostPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Post $post): bool
+   public function delete(User $user, Post $post): bool
     {
-    // Izinkan user untuk menghapus post HANYA JIKA user_id-nya sama dengan user_id milik post.
-        return $user->id === $post->user_id;
-        if ($user->is_admin) { // Asumsi Anda punya kolom 'is_admin' di tabel user
-        return true;
-    }
+        // Izinkan hapus JIKA user adalah 'admin' ATAU user adalah pemilik post.
+        return $user->role === 'admin' || $user->id === $post->user_id;
     }
 
     /**

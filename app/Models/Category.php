@@ -1,26 +1,22 @@
 <?php
-// File: app/Models/Category.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
     use HasFactory;
 
     /**
-     * Menentukan primary key tabel.
-     *
+     * Mendefinisikan primary key secara eksplisit.
      * @var string
      */
     protected $primaryKey = 'kategori_id';
 
     /**
-     * Atribut yang dapat diisi secara massal.
-     *
+     * Atribut yang dapat diisi.
      * @var array
      */
     protected $fillable = [
@@ -28,11 +24,7 @@ class Category extends Model
         'deskripsi_kategori',
     ];
 
-    /**
-     * Mendefinisikan relasi one-to-many ke model Post.
-     * Satu Kategori memiliki banyak Post.
-     */
-    public function posts(): HasMany
+    public function posts()
     {
         return $this->hasMany(Post::class, 'kategori_id', 'kategori_id');
     }

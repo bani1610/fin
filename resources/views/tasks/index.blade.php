@@ -32,9 +32,14 @@
                         </a>
                     </div>
 
-                    {{-- <p>
-                        list tugas
-                    </p> --}}
+                    <div class="hidden md:grid grid-cols-12 gap-4 px-3 py-2 text-xs font-semibold text-gray-500 uppercase border-b border-gray-200">
+                        <div class="col-span-4">Tugas</div>
+                        <div class="col-span-2">Status</div>
+                        <div class="col-span-2">Deadline</div>
+                        <div class="col-span-2">Prioritas</div>
+                        <div class="col-span-1">Beban</div> {{-- <-- KOLOM BARU --}}
+                        <div class="col-span-1 text-right">Aksi</div>
+                    </div>
                     <div class="space-y-3">
                         @forelse ($tasks as $task)
                             <x-task-item :task="$task" />

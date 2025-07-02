@@ -17,8 +17,6 @@ return new class extends Migration
             $table->foreignId('post_id')->constrained('posts', 'post_id')->onDelete('cascade');
             $table->timestamps();
 
-            // Opsional, tapi sangat direkomendasikan:
-            // Mencegah user yang sama me-like post yang sama lebih dari sekali.
             $table->unique(['user_id', 'post_id']);
         });
     }

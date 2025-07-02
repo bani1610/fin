@@ -15,7 +15,10 @@ class PostController extends Controller
     // Menampilkan halaman utama forum dengan daftar postingan
     public function index()
     {
-    $posts = Post::with('user')->withCount('comments')->latest()->paginate(10);
+     $posts = Post::with('user', 'category', 'likes') 
+                 ->withCount('comments')
+                 ->latest()
+                 ->paginate(10);
 
     // --- Tambahkan logging ini untuk debugging ---
     foreach ($posts as $post) {
