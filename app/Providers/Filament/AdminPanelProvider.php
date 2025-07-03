@@ -31,8 +31,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' =>'#f9c5d1', // soft pink,
             ])
+            ->brandName('Mood Study') // <<< ganti ini sesuka kamu
             ->resources([
                 // Daftarkan resource secara manual
                 UserResource::class,

@@ -12,31 +12,40 @@
 
 @layer components {
     .feed-card {
-        @apply bg-white shadow-lg rounded-xl overflow-hidden;
-        border-bottom-color: theme('colors.border-color');
+  @apply bg-pink-200 shadow-lg rounded-xl overflow-hidden;
+  border-bottom-color: theme('colors.pink.300');
     }
+
     .feed-card-header {
-        @apply p-4 flex items-center gap-3 border-b border-border-color;
+  @apply p-4 flex items-center gap-3 border-b border-pink-300;
     }
+
     .feed-card-content {
-        @apply p-4;
+  @apply p-4;
     }
+
     .feed-card-actions {
-        @apply px-4 py-3 flex items-center gap-4 border-t border-border-color;
+  @apply px-4 py-3 flex items-center gap-4 border-t border-pink-300;
     }
+
     .action-button {
-        @apply flex items-center gap-2 text-text-secondary hover:text-primary transition-colors duration-200;
+  @apply flex items-center gap-2 text-pink-500 hover:text-pink-700 transition-colors duration-200;
     }
+
     .card {
-        @apply bg-white rounded-2xl shadow-xl;
+  @apply bg-pink-50 rounded-2xl shadow-xl; /* ubah dari white ke pink muda */
     }
+
     .primary-button {
-        @apply bg-primary text-white hover:bg-opacity-90 transition-colors;
+  @apply bg-pink-500 text-white hover:bg-pink-600 transition-colors;
     }
+
     .form-input {
-        @apply bg-white border border-gray-300;
+  @apply bg-pink-50 border border-pink-300;
     }
+
     .form-input:focus {
-        @apply border-primary ring-2 ring-primary/20;
+  @apply border-pink-500 ring-2 ring-pink-500/20;
     }
+
 }
