@@ -12,12 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-        $table->string('major')->nullable()->after('email');
-        $table->string('university')->nullable()->after('major');
-        $table->text('bio')->nullable()->after('university');
-        $table->string('profile_photo_path', 2048)->nullable()->after('bio');
+            $table->string('profile_photo_path', 2048)->nullable()->after('jurusan');
         });
-        }
+    }
 
     /**
      * Reverse the migrations.
@@ -25,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-        $table->dropColumn(['major', 'university', 'bio']);
-    });
+            $table->dropColumn('profile_photo_path');
+        });
     }
 };

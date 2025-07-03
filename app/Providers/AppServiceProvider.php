@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-       $this->app->singleton(LogoutResponseContract::class, FilamentLogoutResponse::class);
+       $this->app->bind(LogoutResponseContract::class, FilamentLogoutResponse::class);
     }
 
     /**

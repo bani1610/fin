@@ -22,10 +22,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'major',      // <-- Tambahkan ini
-        'university', // <-- Tambahkan ini
-        'bio',        // <-- Tambahkan ini
-        'profile_photo_path', // <-- Tambahkan ini
+        'nim',
+        'universitas',
+        'jurusan',
         'role'
     ];
 
@@ -38,11 +37,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->role === 'admin';
-    }
     public function getProfilePhotoUrlAttribute()
     {
         // Cek apakah ada path foto yang tersimpan di database
@@ -79,12 +73,12 @@ class User extends Authenticatable
         return $this->role === 'user';
     }
 
-    public function moodLogs() 
+    public function moodLogs()
     {
         return $this->hasMany(MoodLog::class);
     }
 
-    public function tasks() 
+    public function tasks()
     {
         return $this->hasMany(Tasks::class);
     }
@@ -97,7 +91,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
     }
-    public function comments() 
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }

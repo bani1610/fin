@@ -5,24 +5,40 @@
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">
-            {{ __("Update your account's profile information and email address.") }}
+            {{ __("Update your account's profile information, email address, and other details.") }}
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('verification.send') }}">
-        @csrf
-    </form>
-
-    <form method="post" action="{{ route('profile.update') }}" class="space-y-6" enctype="multipart/form-data">
+    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         @method('patch')
 
+        <!-- Profile Photo -->
+        <div>
+            <x-input-label for="photo" :value="__('Photo')" />
+            
+            <!-- Current Photo -->
+            <div class="mt-2">
+                @if ($user->profile_photo_path)
+                    <img src="{{ asset('storage/' . $user->profile_photo_path) }}" alt="Current Profile Photo" class="rounded-full h-20 w-20 object-cover">
+                @else
+                    <img src="https://placehold.co/80x80/EFEFEF/333333?text=No+Photo" alt="No Profile Photo" class="rounded-full h-20 w-20 object-cover">
+                @endif
+            </div>
+
+            <!-- New Photo Input -->
+            <x-text-input id="photo" name="photo" type="file" class="mt-1 block w-full" />
+            <x-input-error class="mt-2" :messages="$errors->get('photo')" />
+        </div>
+
+        <!-- Name -->
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        <!-- Email -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
@@ -45,6 +61,27 @@
                     @endif
                 </div>
             @endif
+        </div>
+
+        <!-- NIM -->
+        <div>
+            <x-input-label for="nim" :value="__('NIM')" />
+            <x-text-input id="nim" name="nim" type="text" class="mt-1 block w-full" :value="old('nim', $user->nim)" required autocomplete="nim" />
+            <x-input-error class="mt-2" :messages="$errors->get('nim')" />
+        </div>
+
+        <!-- Universitas -->
+        <div>
+            <x-input-label for="universitas" :value="__('Universitas')" />
+            <x-text-input id="universitas" name="universitas" type="text" class="mt-1 block w-full" :value="old('universitas', $user->universitas)" required autocomplete="universitas" />
+            <x-input-error class="mt-2" :messages="$errors->get('universitas')" />
+        </div>
+
+        <!-- Jurusan -->
+        <div>
+            <x-input-label for="jurusan" :value="__('Jurusan')" />
+            <x-text-input id="jurusan" name="jurusan" type="text" class="mt-1 block w-full" :value="old('jurusan', $user->jurusan)" required autocomplete="jurusan" />
+            <x-input-error class="mt-2" :messages="$errors->get('jurusan')" />
         </div>
 
         <div class="flex items-center gap-4">

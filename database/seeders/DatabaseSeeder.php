@@ -23,10 +23,5 @@ class DatabaseSeeder extends Seeder
         // --- TAMBAHKAN DATA BARU DI SINI ---
         Category::firstOrCreate(['nama_kategori' => 'Info Kampus'], ['deskripsi_kategori' => 'Berbagi informasi seputar kegiatan, beasiswa, dan pengumuman kampus.']);
         Category::firstOrCreate(['nama_kategori' => 'Off-Topic'], ['deskripsi_kategori' => 'Diskusi santai di luar topik akademik.']);
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }
